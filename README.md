@@ -1,5 +1,5 @@
 # Sahaj
-Book your covid vaccine slots with ease. Please use this at your risk. Neither me or other repo owners are not responsible for usage of this program.
+Book your covid vaccine slots with ease. Please use this at your own risk. Neither me or other repo owners are not responsible for usage of this program. Also we do not promise to maintain this code, if you see a bug plz solve it yourself. This had been written in a very short period of time, plz excuse violation of all fundamental coding principles.
 
 Current version works for end to end vaccine booking if you have a iphone and mac. You need to enable text message forwarding from your iphone.
 Please check this link https://support.apple.com/en-in/HT208386#:~:text=On%20your%20iPhone%2C%20iPad%2C%20or,ID%20on%20all%20your%20devices.
