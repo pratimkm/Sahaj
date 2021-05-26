@@ -1,0 +1,12 @@
+pandas
+selenium
+selenium-wire
+svglib==1.0.1
+pysimplegui
+requests
+scipy
+numpy
+2captcha-python
+reportlab
+beautifulsoup4
+pillow
