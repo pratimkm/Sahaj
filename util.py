@@ -1,5 +1,7 @@
 import json
 import http.client
+import re
+import time
 # import logging
 # http.client.HTTPConnection.debuglevel = 1
 # logging.basicConfig()
@@ -10,7 +12,6 @@ import http.client
 
 class Util:
     user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
-    mobile_no = "9945184400"
     login_refresh_period = 720  # every 12 minute
     def get_post_response(self, url1, json_data, context):
         user_agent = Util.user_agent
@@ -31,3 +32,16 @@ class Util:
         # print("###DEBUG### Received Message ==> " + msg_str)
         resp = json.loads(msg_str)
         return resp
+
+    def parse_otp_message(self,message):
+        km = re.search('[0-9][0-9][0-9][0-9][0-9][0-9]',message)
+        if km is not None:
+            return re.search('[0-9][0-9][0-9][0-9][0-9][0-9]',message).group(0)
+        else:
+            -1
+
+    def read_last_otp(self,drv):
+        drv.find_element_by_xpath("//*[text()='AX-NHPSMS']").click()
+        time.sleep(2)
+        otp_message = drv.find_elements_by_class_name('text-msg')[-1].text
+        return Util().parse_otp_message(otp_message)

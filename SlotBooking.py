@@ -18,7 +18,6 @@ class SlotBooking:
             bearer_token = tokens[1]
             f.close()
         #Force token refresh so that we don't send a stale token
-        # UserSessionManager(Util.mobile_no).create_jwt_token()
         mydict = {"dose": 1, "session_id": session_id, "slot": slot, "beneficiaries": beneficiaries, "captcha":captcha}
         json_data = json.dumps(mydict)
         headers = {'authorization': 'Bearer ' + bearer_token,

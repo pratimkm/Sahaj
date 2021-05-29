@@ -1,4 +1,4 @@
-#!/Library/Frameworks/Python.framework/Versions/3.8/bin/python3
+#!/home/pratim/anaconda3/bin/python
 
 import time
 from UserSessionManager import UserSessionManager
@@ -9,10 +9,12 @@ from util import Util
 import requests
 from captcha import CaptchaSolver
 import sys, getopt
+from ChromedriverDownloader import ChromeDriverDownloader
+from AndroidMessageReader import AndroidMessageReader
 
-def refresh_user_session(mobile_no):
+def refresh_user_session(mobile_no,phone_type,chrome_driver):
     while True:
-        UserSessionManager(mobile_no).create_jwt_token()
+        UserSessionManager(mobile_no,phone_type,chrome_driver).create_jwt_token()
         time.sleep(Util.login_refresh_period)     # Token refreshed every 12 minute
         continue
 
@@ -49,27 +51,36 @@ def check_vaccine_availability(district_id,beneficiaries):
 
 
 if __name__ == '__main__':
-    phone_number = ''
+    phone_number = '9088'
     beneficiaries =  []
     district_id = 294
+    phone_type = "android"
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hp:d:b", ["phone=", "district=","beneficiaries="])
+        opts, args = getopt.getopt(sys.argv[1:], "hp:d:b:n:", ["phone=", "district=","beneficiaries=","type="])
     except getopt.GetoptError:
-        print('test.py -p <10 digit mobile number> -d <district id> -b <comma separated list of beneficiaries>')
+        print('test.py -p <10 digit mobile number> -d <district id> -b <comma separated list of beneficiaries> -t <<android/iphone>>')
         sys.exit(2)
-    for opt, arg in opts:
-        if opt in ("-p", "--phone"):
-            phone_number = arg
-        elif opt in ("-d", "--district"):
-            district_id = arg
-        elif opt in ("-b", "--beneficiaries"):
-            beneficiaries = arg.split(",")
+    # for opt, arg in opts:
+    #     print(opt + " " + arg)
+    #     if opt in ("-p", "--phone"):
+    #         phone_number = arg
+    #     elif opt in ("-d", "--district"):
+    #         district_id = arg
+    #     elif opt in ("-b", "--beneficiaries"):
+    #         beneficiaries = arg.split(",")
+    #     elif opt in ("-n", "--type"):
+    #         phone_type = arg
     print('Phone number is ' +  phone_number)
     print('District Id is ' + str(district_id))
+    print('Type of phone is ' + phone_type)
     for beneficiary in beneficiaries:
         print('Beneficiaries are ' + beneficiary)
+
+    chrome_driver = None
+    if phone_type == 'android':
+       chrome_driver = AndroidMessageReader().getDriver()
     # creating thread
-    t1 = threading.Thread(target=refresh_user_session, args=(phone_number,))
+    t1 = threading.Thread(target=refresh_user_session, args=(phone_number,phone_type,chrome_driver))
     # starting thread 1
     t1.start()
 

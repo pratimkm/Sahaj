@@ -1,14 +1,15 @@
 from seleniumwire import webdriver
 import time
 import json
-import signal
 import os
-
+from sys import platform
 
 class AutoFormSubmitter:
 
-    def submitOTPRequest(self,phone_number):
-        chromedriver = "/Users/anwesabagchi/Downloads/chromedriver"
+    def submitOTPRequest(self, phone_number):
+        chromedriver = os.getcwd() + "/chromedriver"
+        if platform == "win32" or platform == "win64":
+            chromedriver = os.getcwd() + "/chromedriver.exe"
         chrome_options = webdriver.ChromeOptions()
         chrome_options.headless = True
         driver = webdriver.Chrome(executable_path=chromedriver)
@@ -17,7 +18,7 @@ class AutoFormSubmitter:
         pid = driver.service.process.pid
         time.sleep(2)
         username_input = '//*[@id="mat-input-0"]'
-        driver.find_element_by_xpath(username_input).send_keys("9945184400")
+        driver.find_element_by_xpath(username_input).send_keys(phone_number)
         login_submit = '//*[@id="main-content"]/app-login/ion-content/div/ion-grid/ion-row/ion-col/ion-grid/ion-row/ion-col[1]/ion-grid/form/ion-row/ion-col[2]/div/ion-button'
         driver.find_element_by_xpath(login_submit).click()
         time.sleep(2)
