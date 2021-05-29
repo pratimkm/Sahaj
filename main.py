@@ -51,7 +51,7 @@ def check_vaccine_availability(district_id,beneficiaries):
 
 
 if __name__ == '__main__':
-    phone_number = '9088362234'
+    phone_number = ''
     beneficiaries =  []
     district_id = 294
     phone_type = "android"
@@ -60,16 +60,15 @@ if __name__ == '__main__':
     except getopt.GetoptError:
         print('test.py -p <10 digit mobile number> -d <district id> -b <comma separated list of beneficiaries> -t <<android/iphone>>')
         sys.exit(2)
-    # for opt, arg in opts:
-    #     print(opt + " " + arg)
-    #     if opt in ("-p", "--phone"):
-    #         phone_number = arg
-    #     elif opt in ("-d", "--district"):
-    #         district_id = arg
-    #     elif opt in ("-b", "--beneficiaries"):
-    #         beneficiaries = arg.split(",")
-    #     elif opt in ("-n", "--type"):
-    #         phone_type = arg
+    for opt, arg in opts:
+        if opt in ("-p", "--phone"):
+            phone_number = arg
+        elif opt in ("-d", "--district"):
+            district_id = arg
+        elif opt in ("-b", "--beneficiaries"):
+            beneficiaries = arg.split(",")
+        elif opt in ("-n", "--type"):
+            phone_type = arg
     print('Phone number is ' +  phone_number)
     print('District Id is ' + str(district_id))
     print('Type of phone is ' + phone_type)
