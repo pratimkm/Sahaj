@@ -51,7 +51,7 @@ def check_vaccine_availability(district_id,beneficiaries):
 
 
 if __name__ == '__main__':
-    phone_number = '9088'
+    phone_number = '9088362234'
     beneficiaries =  []
     district_id = 294
     phone_type = "android"

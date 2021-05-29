@@ -59,8 +59,8 @@ class UserSessionManager:
             first_line = f.readline()
             f.close()
         if phone_type == 'android':
-            time.sleep(60)
-            return 60, Util().read_last_otp(self.android),first_line
+            time_received, otp = Util().read_last_otp(self.android)
+            return time_received, otp, first_line
         else:
             fd = fetch_data.FetchData()
             my_data = fd.get_messages()
@@ -82,7 +82,7 @@ class UserSessionManager:
         AutoFormSubmitter().submitOTPRequest(phone_number=self.mobile_number)
         for i in range(0,60):   ## Wait for OTP upto 1 minute
             time.sleep(2)
-            time_diff, last_otp, txnId = self.check_last_otp_txnId(self.mobile_number)
+            time_diff, last_otp, txnId = self.check_last_otp_txnId(self.phone_type)
             if time_diff < 175:
                 return time_diff, last_otp, txnId
         return last_otp, txnId

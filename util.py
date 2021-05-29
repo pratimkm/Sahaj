@@ -2,6 +2,7 @@ import json
 import http.client
 import re
 import time
+import datetime
 # import logging
 # http.client.HTTPConnection.debuglevel = 1
 # logging.basicConfig()
@@ -43,5 +44,13 @@ class Util:
     def read_last_otp(self,drv):
         drv.find_element_by_xpath("//*[text()='AX-NHPSMS']").click()
         time.sleep(2)
-        otp_message = drv.find_elements_by_class_name('text-msg')[-1].text
-        return Util().parse_otp_message(otp_message)
+        # otp_message = drv.find_elements_by_class_name('text-msg')[-1].text
+        # last_msgtag = drv.find_elements_by_class_name("ng-trigger ng-trigger-incomingMessage ng-tns-c153-134 ng-star-inserted")[-1]
+        last_msgtag = drv.find_element_by_xpath("//*/mws-message-wrapper[last()]/div/div/div/mws-message-part-router/mws-text-message-part")
+        last_msgs = last_msgtag.get_attribute("aria-label")
+        print("Received OTP message : " + last_msgs)
+        last_msgs_arr = last_msgs.split(".")
+        otp = last_msgs_arr[0][-6:]
+        last_received_date = datetime.datetime.strptime(last_msgs_arr[3].replace(" Received on ",""),"%b %d, %Y at %I:%M %p")
+        receive_time = datetime.datetime.now() - last_received_date
+        return receive_time.total_seconds(), otp

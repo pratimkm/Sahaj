@@ -24,6 +24,7 @@ class AndroidMessageReader:
 
     def getDriver(self):
         self.driver.get('https://messages.google.com/web')
+        time.sleep(60)
         return self.driver
 
 # android = AndroidMessageReader()
