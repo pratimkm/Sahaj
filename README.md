@@ -13,9 +13,11 @@ You are free to modify the code for android/pc. This program will run in the bac
 
 
 To run this program you may have to modify the python path in main.py and do chmod +x main.py
-
+**
+comma separated list of beneficiaries**
 To run this program:
-./main.py -p <Your registered mobile no> -d district_id -b <comma separated list of beneficiaries> -n <type>
+./main.py -p **Your registered mobile no** -d **district_id** -b **
+comma separated list of beneficiaries** -n **type**
   
   type can be **iphone** or **android**
 
