@@ -83,7 +83,7 @@ if __name__ == '__main__':
     # starting thread 1
     t1.start()
 
-    time.sleep(10)
+    time.sleep(20)
 
     t2 = threading.Thread(target=check_vaccine_availability, args=(district_id,beneficiaries))
     # starting thread 2

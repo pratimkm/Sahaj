@@ -21,6 +21,7 @@ class Availability_Checker:
         self.request_body = {}
 
     def location_availability(self):
+        resp = None
         try:
             connection = http.client.HTTPSConnection(self.url)
             with open('last_jwt_token_id') as f:
@@ -34,15 +35,20 @@ class Availability_Checker:
                 connection.request("GET", self.context1, headers=headers)
                 response = connection.getresponse()
                 msg_str = response.read().decode()
-              #  print("###DEBUG### Status Code " + str(response.status) + " & Received Message ==> " + msg_str)
-                resp = json.loads(msg_str)
-                for center in resp['centers']:
-                    for session in center['sessions']:
-                        if session['available_capacity'] > 0 and session['min_age_limit'] < 45 and session['available_capacity_dose1'] > 5:
-                            print(str(center['pincode']) + " have " + str(session['available_capacity']) + " slots opened for age group " + str(session['min_age_limit']))
-                            available_slots = session['slots']
-                            return center['pincode'], session['session_id'], available_slots
 
+                if response.status == 200:
+                    resp = json.loads(msg_str)
+                    for center in resp['centers']:
+                        for session in center['sessions']:
+                            if session['available_capacity'] > 0 and session['min_age_limit'] < 45 and session[
+                                'available_capacity_dose1'] > 5:
+                                print(str(center['pincode']) + " have " + str(
+                                    session['available_capacity']) + " slots opened for age group " + str(
+                                    session['min_age_limit']))
+                                available_slots = session['slots']
+                                return center['pincode'], session['session_id'], available_slots
+                else:
+                    print("###DEBUG### Status Code " + str(response.status) + " & Received Message ==> " + msg_str)
                 print("No slots available in your district at : " + datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
         except:
             print("Received data error, will continue")
