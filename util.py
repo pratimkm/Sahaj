@@ -51,6 +51,6 @@ class Util:
         print("Received OTP message : " + last_msgs)
         last_msgs_arr = last_msgs.split(".")
         otp = last_msgs_arr[0][-6:]
-        last_received_date = datetime.datetime.strptime(last_msgs_arr[3].replace(" Received on ",""),"%b %d, %Y at %I:%M %p")
+        last_received_date = datetime.datetime.strptime(last_msgs_arr[3].replace(" Received on ",""),"%B %d, %Y at %I:%M %p")
         receive_time = datetime.datetime.now() - last_received_date
         return receive_time.total_seconds(), otp
